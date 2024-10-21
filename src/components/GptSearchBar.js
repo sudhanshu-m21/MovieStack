@@ -3,7 +3,11 @@ import lang from "../utils/languageConstatnt";
 import { useDispatch, useSelector } from "react-redux";
 import openai from "../utils/open_AI";
 import { API_OPTIONS } from "../utils/constants";
-import { addGptMovieResult } from "../utils/gptSlice";
+import {
+  addGptMovieResult,
+  toggleSearchButtonClicked,
+} from "../utils/gptSlice";
+import Shimmer from "./Shimmer";
 const GptSearchBar = () => {
   const dispatch = useDispatch();
   const searchText = useRef(null);
@@ -19,22 +23,49 @@ const GptSearchBar = () => {
     return json.results;
   };
   const handleGptSearchClick = async () => {
-    const model = openai.getGenerativeModel({ model: "gemini-pro" });
-    const gptQuery =
-      "Act as a Movie Recommendation system and suggest some movies for the query: " +
-      searchText.current.value +
-      ". Only give me the names of 5 movies in array of strings format.";
-    const gptResult = await model.generateContent(gptQuery);
-    const movies = JSON.parse(
-      gptResult?.response?.candidates[0]?.content?.parts[0].text || "[]"
-    );
-    const data = movies.map((movie) => searchMovie(movie));
-    const tmdbResults = await Promise.all(data);
-    // console.log(tmdbResults);
-    dispatch(
-      addGptMovieResult({ movieNames: movies, movieResults: tmdbResults })
-    );
+    dispatch(toggleSearchButtonClicked(true));
+    try {
+      const model = openai.getGenerativeModel({ model: "gemini-pro" });
+      const gptQuery =
+        "Act as a Movie Recommendation system and suggest some movies for the query: " +
+        searchText.current.value +
+        ". Only give me the names of 5 movies in array of strings format.";
+
+      const gptResult = await model.generateContent(gptQuery);
+      const movies = JSON.parse(
+        gptResult?.response?.candidates[0]?.content?.parts[0].text || "[]"
+      );
+
+      const data = movies.map((movie) => searchMovie(movie));
+      const tmdbResults = await Promise.all(data);
+
+      dispatch(
+        addGptMovieResult({ movieNames: movies, movieResults: tmdbResults })
+      );
+    } catch (error) {
+      console.error("Error fetching movies:", error);
+    } finally {
+      dispatch(toggleSearchButtonClicked(false));
+    }
   };
+  // dispatch(toggleSearchButtonClicked(true));
+  // const model = openai.getGenerativeModel({ model: "gemini-pro" });
+  // const gptQuery =
+  //   "Act as a Movie Recommendation system and suggest some movies for the query: " +
+  //   searchText.current.value +
+  //   ". Only give me the names of 5 movies in array of strings format.";
+  // const gptResult = await model.generateContent(gptQuery);
+  // const movies = JSON.parse(
+  //   gptResult?.response?.candidates[0]?.content?.parts[0].text || "[]"
+  // );
+  // const data = movies.map((movie) => searchMovie(movie));
+  // const tmdbResults = await Promise.all(data);
+  // // console.log(tmdbResults);
+  // dispatch(
+  //   addGptMovieResult({ movieNames: movies, movieResults: tmdbResults })
+  // );
+  // dispatch(toggleSearchButtonClicked(false));
+  // };
   return (
     <div className="pt-[35%] md:pt-[10%] flex justify-center">
       <form

@@ -6,7 +6,7 @@ export const checkValidData = (email, password) => {
 
   // Corrected password regex
   const isValidPassword =
-    /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&-+=()])(?=\S+$).{8,}$/.test(
+    /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/.test(
       password
     );
 

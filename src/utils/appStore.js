@@ -9,7 +9,6 @@ const appStore = configureStore({
     movies: moviesReducer,
     gpt: gptReducer,
     lang: langReducer,
-    // gptMovies: gptMoviesReducer,
   },
 });
 export default appStore;

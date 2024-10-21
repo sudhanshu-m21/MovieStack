@@ -107,14 +107,14 @@ const Login = () => {
           />
           <input
             ref={password}
-            type="text"
+            type="password"
             placeholder="Password"
             className="p-4 my-4 w-full bg-gray-700"
           />
           <p className="text-red-600 text-lg font-bold">{errorMessage}</p>
           {!isSignIn && (
             <input
-              type="text"
+              type="password"
               placeholder="Confirm Password"
               className="p-4 my-4 w-full bg-gray-700"
             />
