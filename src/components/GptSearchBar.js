@@ -7,7 +7,6 @@ import {
   addGptMovieResult,
   toggleSearchButtonClicked,
 } from "../utils/gptSlice";
-import Shimmer from "./Shimmer";
 const GptSearchBar = () => {
   const dispatch = useDispatch();
   const searchText = useRef(null);
@@ -24,6 +23,11 @@ const GptSearchBar = () => {
   };
   const handleGptSearchClick = async () => {
     dispatch(toggleSearchButtonClicked(true));
+    if (searchText.current.value === "") {
+      dispatch(addGptMovieResult({ movieNames: [], movieResults: [] }));
+      dispatch(toggleSearchButtonClicked(false));
+      return;
+    }
     try {
       const model = openai.getGenerativeModel({ model: "gemini-pro" });
       const gptQuery =
@@ -67,19 +71,19 @@ const GptSearchBar = () => {
   // dispatch(toggleSearchButtonClicked(false));
   // };
   return (
-    <div className="pt-[35%] md:pt-[10%] flex justify-center">
+    <div className="pt-[45%] md:pt-[10%] flex justify-center">
       <form
-        className="w-full md:w-1/2 bg-black grid grid-cols-12"
+        className="w-full md:w-1/2 bg-black grid grid-cols-12 rounded-lg"
         onSubmit={(e) => e.preventDefault()}
       >
         <input
           ref={searchText}
           type="text"
-          className=" p-4 m-4 col-span-9"
+          className=" p-4 m-4 mr-1 col-span-8 rounded-lg"
           placeholder={lang[langKey].gptSearchPlaceholder}
         />
         <button
-          className="col-span-3 p-4 m-4 bg-red-700 text-white rounded-lg"
+          className="col-span-4 p-4 m-4 ml-1 bg-red-700 text-white rounded-lg hover:bg-green-500 hover:scale-95 transition-all duration-150"
           onClick={handleGptSearchClick}
         >
           {lang[langKey].search}

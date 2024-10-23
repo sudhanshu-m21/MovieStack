@@ -15,13 +15,13 @@ const MovieList = ({ title, movies }) => {
       <h1 className="text-lg md:text-3xl py-4 text-white">{title}</h1>
       <button
         onClick={scrollLeft}
-        className="absolute left-15 z-10 bg-transparent text-white text-2xl"
+        className="absolute left-15 z-10 bg-transparent text-white text-2xl hover:scale-125 duration-150"
       >
         ⬅
       </button>
       <button
         onClick={scrollRight}
-        className="absolute right-6 z-10 bg-transparent text-white text-2xl"
+        className="absolute right-6 z-10 bg-transparent text-white text-2xl hover:scale-125 duration-150"
       >
         ➡
       </button>
