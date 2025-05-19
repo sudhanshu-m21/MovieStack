@@ -29,16 +29,28 @@ const GptSearchBar = () => {
       return;
     }
     try {
-      const model = openai.getGenerativeModel({ model: "gemini-pro" });
+      const model = openai.getGenerativeModel({
+        model: "gemini-2.0-flash",
+      });
       const gptQuery =
         "Act as a Movie Recommendation system and suggest some movies for the query: " +
         searchText.current.value +
-        ". Only give me the names of 5 movies in array of strings format.";
+        ". Only give me the names of 5 movies in array of strings format without any other message.";
 
       const gptResult = await model.generateContent(gptQuery);
-      const movies = JSON.parse(
-        gptResult?.response?.candidates[0]?.content?.parts[0].text || "[]"
-      );
+      console.log(gptResult);
+      let movies = [];
+      try {
+        const text =
+          gptResult?.response?.candidates?.[0]?.content?.parts?.[0]?.text;
+        const cleanText = text.replace(/```json\n|\n```/g, "").trim();
+        movies = JSON.parse(cleanText || "[]");
+        if (!Array.isArray(movies))
+          throw new Error("GPT response is not an array");
+      } catch (err) {
+        console.error("Failed to parse GPT response:", err);
+        movies = [];
+      }
 
       const data = movies.map((movie) => searchMovie(movie));
       const tmdbResults = await Promise.all(data);
@@ -52,24 +64,6 @@ const GptSearchBar = () => {
       dispatch(toggleSearchButtonClicked(false));
     }
   };
-  // dispatch(toggleSearchButtonClicked(true));
-  // const model = openai.getGenerativeModel({ model: "gemini-pro" });
-  // const gptQuery =
-  //   "Act as a Movie Recommendation system and suggest some movies for the query: " +
-  //   searchText.current.value +
-  //   ". Only give me the names of 5 movies in array of strings format.";
-  // const gptResult = await model.generateContent(gptQuery);
-  // const movies = JSON.parse(
-  //   gptResult?.response?.candidates[0]?.content?.parts[0].text || "[]"
-  // );
-  // const data = movies.map((movie) => searchMovie(movie));
-  // const tmdbResults = await Promise.all(data);
-  // // console.log(tmdbResults);
-  // dispatch(
-  //   addGptMovieResult({ movieNames: movies, movieResults: tmdbResults })
-  // );
-  // dispatch(toggleSearchButtonClicked(false));
-  // };
   return (
     <div className="pt-[45%] md:pt-[10%] flex justify-center">
       <form
