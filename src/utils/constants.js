@@ -1,5 +1,5 @@
 export const LOGO =
-  "https://static.vecteezy.com/system/resources/thumbnails/008/350/760/small_2x/initial-m-logo-design-vector.jpg";
+  "https://sdmntprsouthcentralus.oaiusercontent.com/files/00000000-9464-61f7-93d4-814014376db9/raw?se=2025-05-19T13%3A23%3A50Z&sp=r&sv=2024-08-04&sr=b&scid=00000000-0000-0000-0000-000000000000&skoid=9ccea605-1409-4478-82eb-9c83b25dc1b0&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2025-05-19T10%3A47%3A18Z&ske=2025-05-20T10%3A47%3A18Z&sks=b&skv=2024-08-04&sig=9t2dBIEp5/OFgTozQfpnKqbyW/rVQrQGgDHwjoyUxwQ%3D";
 // export const LOGO =
 //   "https://cdn.cookielaw.org/logos/dd6b162f-1a32-456a-9cfe-897231c7763c/4345ea78-053c-46d2-b11e-09adaef973dc/Netflix_Logo_PMS.png";
 
