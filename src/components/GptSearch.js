@@ -13,7 +13,7 @@ const GptSearch = () => {
           className="h-screen md:h-auto object-cover md:object-none"
         />
       </div>
-      <div className="">
+      <div>
         <GptSearchBar />
         <GptMovieSuggation />
       </div>
