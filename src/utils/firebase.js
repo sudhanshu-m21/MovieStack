@@ -2,17 +2,17 @@
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import { getAuth } from "firebase/auth";
-
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
-  authDomain: process.env.AUTH_DOMAIN,
-  projectId: "netflixgpt-d15c8",
-  storageBucket: "netflixgpt-d15c8.appspot.com",
-  messagingSenderId: "846014100445",
-  appId: "1:846014100445:web:afe95ab6b8f6043d617c34",
-  measurementId: "G-DCDWJN3R5N",
+  authDomain: "moviestack-39b64.firebaseapp.com",
+  projectId: "moviestack-39b64",
+  storageBucket: "moviestack-39b64.firebasestorage.app",
+  messagingSenderId: "1094901016910",
+  appId: "1:1094901016910:web:abd034b57c86ed5c24161f",
+  measurementId: "G-CKV10ZBFFJ",
 };
 
+// Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 export const auth = getAuth();
